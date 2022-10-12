@@ -15,6 +15,15 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "cypress/e2e/app.spec.js",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "cypress/e2e/app.spec.js",
+    "cypress/e2e/app.spec.js",
+    "cypress/e2e/app.spec.js",
+    "cypress/e2e/app.spec.js"
+  ],
   "exclude": ["node_modules"]
 }

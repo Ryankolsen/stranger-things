@@ -1,9 +1,35 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 
-const Home: NextPage = () => {
+interface Props {
+  NASA_API: string;
+}
+
+const Home = (props: Props) => {
+  const API_Key = props.NASA_API;
+
+  async function fetchData() {
+    console.log(API_Key);
+    const link = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3&api_key=${API_Key}`;
+    const imageData = await fetch(link)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+    return imageData;
+  }
+  const queryClient = useQueryClient();
+  const { data, isLoading, error } = useQuery(["fetchImages"], fetchData);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -18,10 +44,20 @@ const Home: NextPage = () => {
           <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
             Search
           </button>
+
+          <div>{data ? <div> returned data</div> : null}</div>
         </>
       </main>
     </div>
   );
 };
+
+export async function getStaticProps() {
+  return {
+    props: {
+      NASA_API: process.env.NASA_API,
+    },
+  };
+}
 
 export default Home;

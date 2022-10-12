@@ -69,20 +69,13 @@ const Navbar: NextPage = () => {
               </div>
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
-                  <button
-                    className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
-                    onClick={() => handleNavRout("/")}
-                  >
-                    Home
-                  </button>
+                  <div className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium link-about">
+                    <Link href="/">Home</Link>
+                  </div>
 
-                  <button
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    onClick={() => handleNavRout("/rickMortyApi/1")}
-                  >
-                    Rick Search
-                  </button>
-
+                  <div className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                    <Link href="/about/">About</Link>
+                  </div>
                   <a
                     href="https://www.ryansportkey.com/"
                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
@@ -155,7 +148,7 @@ const Navbar: NextPage = () => {
               <Link href="/">Home</Link>
             </div>
             <div className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium cursor-pointer">
-              <Link href="/">About</Link>
+              <Link href="/about/">About</Link>
             </div>
 
             <a
