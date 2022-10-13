@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  background-color: #00131b;
+  color: #eeecec;
+}
 /* html,
 body {
   padding: 0;
