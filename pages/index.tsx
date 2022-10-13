@@ -1,21 +1,43 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/router";
+import { useForm, Resolver } from "react-hook-form";
 
 interface Props {
   NASA_API: string;
 }
 
-const Home = (props: Props) => {
-  const API_Key = props.NASA_API;
+interface Inputs {
+  inputDate: string;
+}
 
+const resolver: Resolver<Inputs> = async (values) => {
+  return {
+    values: values.inputDate ? values : {},
+    errors: !values.inputDate
+      ? {
+          inputDate: {
+            type: "minLength",
+            message: "Please enter a date in yyyy-mm-dd format.",
+          },
+        }
+      : {},
+  };
+};
+
+const Home = (props: Props) => {
+  const router = useRouter();
+  const API_Key = props.NASA_API;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>({ resolver });
+  const onSubmit = handleSubmit((data) =>
+    router.push(`/nasa/${data.inputDate}`)
+  );
   async function fetchData() {
     console.log(API_Key);
     const link = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3&api_key=${API_Key}`;
@@ -29,7 +51,7 @@ const Home = (props: Props) => {
   }
   const queryClient = useQueryClient();
   const { data, isLoading, error } = useQuery(["fetchImages"], fetchData);
-
+  console.log(data);
   return (
     <div className={styles.container}>
       <Head>
@@ -41,11 +63,21 @@ const Home = (props: Props) => {
       <main>
         <>
           <h1 className="text-4xl text-center p-4">NASA</h1>
+
           <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
             Search
           </button>
-
-          <div>{data ? <div> returned data</div> : null}</div>
+          <div>
+            <form className="p-4" onSubmit={onSubmit}>
+              <label>
+                Earth Date:{" "}
+                <input className="text-gray-900" {...register("inputDate")} />
+              </label>
+              <input type={"submit"} />
+            </form>
+            {errors.inputDate && <p>{errors.inputDate.message}</p>}
+          </div>
+          <div className="p-4">{data ? <div> returned data</div> : null}</div>
         </>
       </main>
     </div>
