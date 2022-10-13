@@ -39,7 +39,6 @@ const Home = (props: Props) => {
     router.push(`/nasa/${data.inputDate}`)
   );
   async function fetchData() {
-    console.log(API_Key);
     const link = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3&api_key=${API_Key}`;
     const imageData = await fetch(link)
       .then((response) => response.json())
@@ -49,9 +48,7 @@ const Home = (props: Props) => {
       });
     return imageData;
   }
-  const queryClient = useQueryClient();
-  const { data, isLoading, error } = useQuery(["fetchImages"], fetchData);
-  console.log(data);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -77,7 +74,6 @@ const Home = (props: Props) => {
             </form>
             {errors.inputDate && <p>{errors.inputDate.message}</p>}
           </div>
-          <div className="p-4">{data ? <div> returned data</div> : null}</div>
         </>
       </main>
     </div>

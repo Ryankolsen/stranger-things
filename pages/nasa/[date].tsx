@@ -46,6 +46,22 @@ const NasaByDate = (props: Props) => {
         <>
           {router.isFallback || isLoading ? (
             <p>loading...</p>
+          ) : props.data ? (
+            <div>
+              <h1>Images From {props.date}</h1>
+              {props.data.photos.map((photo) => {
+                return (
+                  <div key={photo.id}>
+                    <Image
+                      width={500}
+                      height={500}
+                      src={photo.img_src}
+                      alt={`Image from ${photo.camera.full_name}`}
+                    />
+                  </div>
+                );
+              })}
+            </div>
           ) : data?.photos ? (
             <>
               <div>
@@ -83,14 +99,16 @@ interface Context {
 }
 export async function getStaticProps(context: Context) {
   const { date } = context.params;
-
-  //TODO add fetch
+  console.log("date", date);
 
   const API_KEY = process.env.NASA_API;
-  const link = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=${date}&api_key=${API_KEY}`;
-  const data = await fetch(link).then((res) => res.json());
-  console.log(data);
+  console.log("API_KEY", API_KEY);
 
+  const link = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=${date}&api_key=${API_KEY}`;
+
+  console.log("Link", link);
+  const data = await fetch(link).then((res) => res.json());
+  console.log("data", data);
   return {
     props: {
       date,
@@ -105,6 +123,11 @@ export function getStaticPaths() {
       {
         params: {
           date: "2015-6-3",
+        },
+      },
+      {
+        params: {
+          date: "2015-6-2",
         },
       },
     ],
