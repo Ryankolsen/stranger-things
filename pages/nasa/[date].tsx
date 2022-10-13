@@ -99,16 +99,12 @@ interface Context {
 }
 export async function getStaticProps(context: Context) {
   const { date } = context.params;
-  console.log("date", date);
 
   const API_KEY = process.env.NASA_API;
-  console.log("API_KEY", API_KEY);
 
   const link = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=${date}&api_key=${API_KEY}`;
 
-  console.log("Link", link);
   const data = await fetch(link).then((res) => res.json());
-  console.log("data", data);
   return {
     props: {
       date,
