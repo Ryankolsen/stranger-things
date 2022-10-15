@@ -48,19 +48,24 @@ const NasaByDate = (props: Props) => {
             <p>loading...</p>
           ) : props.data ? (
             <div>
-              <h1>Images From {props.date}</h1>
-              {props.data.photos.map((photo) => {
-                return (
-                  <div key={photo.id}>
-                    <Image
-                      width={500}
-                      height={500}
-                      src={photo.img_src}
-                      alt={`Image from ${photo.camera.full_name}`}
-                    />
-                  </div>
-                );
-              })}
+              <h1 className="text-center text-3xl p-8">
+                Images From {props.date}
+              </h1>
+              <div className="flex flex-wrap justify-around pt-2">
+                {props.data.photos.map((photo) => {
+                  return (
+                    <div className="p-4 " key={photo.id}>
+                      <Image
+                        className="rounded-lg"
+                        width={250}
+                        height={250}
+                        src={photo.img_src}
+                        alt={`Image from ${photo.camera.full_name}`}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           ) : data?.photos ? (
             <>
@@ -123,7 +128,7 @@ export function getStaticPaths() {
       },
       {
         params: {
-          date: "2015-6-2",
+          date: "2015-12-15",
         },
       },
     ],
