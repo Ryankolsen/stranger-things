@@ -53,7 +53,6 @@ const Home = (props: Props) => {
   const { data, isLoading, isError } = useQuery(["getImages"], {
     initialData: props.imageData,
   });
-  console.log(props);
   const {
     register,
     handleSubmit,
@@ -132,7 +131,6 @@ export async function getStaticProps() {
   const imageData = await fetch(link)
     .then((response) => response.json())
     .then((data: Props) => {
-      console.log("data", data);
       return data;
     });
 
