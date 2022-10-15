@@ -22,15 +22,11 @@ interface Data {
   }[];
 }
 const fetchImages = async (link: string, date: string, limit = 10) => {
-  console.log("link", link);
-
-  // const link = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=${date}&api_key=${API_KEY}`;
   const parsed = await fetch(link)
     .then((res) => res.json())
     .then((data: Data) => {
       return data;
     });
-  console.log("parsed", parsed);
   return parsed;
 };
 
