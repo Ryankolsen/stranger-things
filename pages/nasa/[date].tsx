@@ -102,7 +102,7 @@ export async function getStaticProps(context: Context) {
 
   const API_KEY = process.env.NASA_API;
 
-  const link = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=${date}&api_key=${API_KEY}`;
+  const link = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=${date}&page=1&api_key=${API_KEY}`;
 
   const data = await fetch(link).then((res) => res.json());
   return {

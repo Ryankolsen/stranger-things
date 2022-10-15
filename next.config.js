@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["mars.jpl.nasa.gov"],
+    domains: ["mars.jpl.nasa.gov", "mars.nasa.gov"],
   },
 };
 
