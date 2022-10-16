@@ -5,6 +5,9 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useForm, Resolver } from "react-hook-form";
 import Image from "next/image";
+import heroImg from "../assets/mars-space-image.jpg";
+
+//This page loads without hydration/dehydration
 
 interface Props {
   imageData: {
@@ -72,51 +75,65 @@ const Home = (props: Props) => {
 
       <main>
         <>
-          <h1 className="text-4xl text-center p-4">NASA</h1>
+          <div className="w-fit m-auto">
+            <Image
+              className="w-full sm:w-96 object-cover object-top opacity-50"
+              src={heroImg}
+              alt="image of mars"
+              width={1280}
+              height={460}
+            />
+            <div className=" absolute top-28 sm:top-32 lg:top-48 inset-x-3  self-center  text-center text-gray-50 ">
+              <h1 className="text-4xl md:5xl lg:text-6xl">NASA</h1>
+              <p className="pt-4 text-2xl md:3xl lg:text-4xl">
+                Search the Mars Rover API
+              </p>
+            </div>
 
-          <div>
-            <form className="p-4" onSubmit={onSubmit}>
-              <label className="p-8">
-                Earth Date:{" "}
-                <input className="text-gray-900" {...register("inputDate")} />
-              </label>
+            <div className="text-center p-6">
+              <form className="p-4" onSubmit={onSubmit}>
+                <label className="p-8">
+                  Earth Date:{" "}
+                  <input className="text-gray-900" {...register("inputDate")} />
+                </label>
 
-              <input
-                className=" bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-                type={"submit"}
-              />
-            </form>
-            {errors.inputDate && <p>{errors.inputDate.message}</p>}
-          </div>
+                <input
+                  className=" bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                  type={"submit"}
+                />
+              </form>
+              {errors.inputDate && <p>{errors.inputDate.message}</p>}
+            </div>
 
-          <div>
-            {isLoading ? (
-              <p>Loading...</p>
-            ) : props.imageData ? (
-              <div className="flex flex-wrap justify-around">
-                {props.imageData.photos.map((image) => {
-                  return (
-                    <div key={image.id}>
-                      <div>
-                        <Image src={image.img_src} height={250} width={250} />
-                      </div>{" "}
-                    </div>
-                  );
-                })}
-              </div>
-            ) : isError ? (
-              <p>Error fetching data</p>
-            ) : data ? (
-              <div>
-                {data.photos.map((image) => {
-                  return (
-                    <div key={image.id}>
-                      <img src={image.img_src} />
-                    </div>
-                  );
-                })}
-              </div>
-            ) : null}
+            <div>
+              {isLoading ? (
+                <p>Loading...</p>
+              ) : props.imageData ? (
+                <div className="flex flex-wrap justify-around">
+                  {props.imageData.photos.map((image) => {
+                    return (
+                      <div key={image.id}>
+                        <div>
+                          <Image src={image.img_src} height={250} width={250} />
+                        </div>{" "}
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : isError ? (
+                <p>Error fetching data</p>
+              ) : data ? (
+                <div>
+                  {data.photos.map((image) => {
+                    return (
+                      <div key={image.id}>
+                        <img src={image.img_src} />
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : null}
+            </div>
           </div>
         </>
       </main>
