@@ -1,7 +1,13 @@
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  QueryClient,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import Image from "next/image";
+import { fetchImages, useImages } from "../../hooks/index";
 
 interface Props {
   date: string;
@@ -31,9 +37,11 @@ interface Props {
 const NasaByDate = (props: Props) => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { data, isLoading, isError } = useQuery(["fetchData"], {
-    initialData: props.data,
-  });
+  const { data, isLoading, isError } = useQuery(["fetchData"], () =>
+    fetchImages(props.date)
+  );
+
+  console.log("data", data?.data);
 
   return (
     <>
@@ -67,22 +75,25 @@ const NasaByDate = (props: Props) => {
                 })}
               </div>
             </div>
-          ) : data?.photos ? (
+          ) : data?.data.photos ? (
             <>
               <div>
                 <h1>Images From {props.date}</h1>
-                {data.photos.map((photo) => {
-                  return (
-                    <div key={photo.id}>
-                      <Image
-                        width={500}
-                        height={500}
-                        src={photo.img_src}
-                        alt={`Image from ${photo.camera.full_name}`}
-                      />
-                    </div>
-                  );
-                })}
+                <div className="flex flex-wrap justify-around pt-2">
+                  {data.data.photos.map((photo) => {
+                    return (
+                      <div className="p-4" key={photo.id}>
+                        <Image
+                          className="rounded-lg"
+                          width={250}
+                          height={250}
+                          src={photo.img_src}
+                          alt={`Image from ${photo.camera.full_name}`}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </>
           ) : !data ? (
@@ -103,17 +114,16 @@ interface Context {
   };
 }
 export async function getStaticProps(context: Context) {
+  const queryClient = new QueryClient();
   const { date } = context.params;
+  console.log("fetching images from getstatic props", date);
 
-  const API_KEY = process.env.NASA_API;
+  await queryClient.prefetchQuery(["fetchData"], () => fetchImages(date));
 
-  const link = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=${date}&page=1&api_key=${API_KEY}`;
-
-  const data = await fetch(link).then((res) => res.json());
   return {
     props: {
       date,
-      data,
+      dehydratedState: dehydrate(queryClient),
     },
   };
 }
