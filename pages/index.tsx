@@ -75,7 +75,7 @@ const Home = (props: Props) => {
 
       <main>
         <>
-          <div className="w-fit m-auto">
+          <div className="w-fit m-auto min-h-[1000px]">
             <Image
               className="w-full sm:w-96 object-cover object-top opacity-50"
               src={heroImg}
@@ -91,14 +91,19 @@ const Home = (props: Props) => {
             </div>
 
             <div className="text-center p-6">
+              <p>Search for images by date</p>
               <form className="p-4" onSubmit={onSubmit}>
                 <label className="p-8">
                   Earth Date:{" "}
-                  <input className="text-gray-900" {...register("inputDate")} />
+                  <input
+                    className="mx-4 text-gray-900"
+                    placeholder="2020-9-15"
+                    {...register("inputDate")}
+                  />
                 </label>
 
                 <input
-                  className=" bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                  className="mt-8  sm:mt-auto bg-transparent hover:cursor-pointer hover:bg-blue-500 text-gray-200 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
                   type={"submit"}
                 />
               </form>
