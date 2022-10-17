@@ -117,7 +117,7 @@ const Home = (props: Props) => {
                 <div className="flex flex-wrap justify-around">
                   {props.imageData.photos.map((image) => {
                     return (
-                      <div key={image.id}>
+                      <div className="p-6" key={image.id}>
                         <div>
                           <Image src={image.img_src} height={250} width={250} />
                         </div>{" "}
@@ -128,11 +128,11 @@ const Home = (props: Props) => {
               ) : isError ? (
                 <p>Error fetching data</p>
               ) : data ? (
-                <div>
+                <div className="flex flex-wrap justify-around">
                   {data.photos.map((image) => {
                     return (
                       <div key={image.id}>
-                        <img src={image.img_src} />
+                        <Image src={image.img_src} height={250} width={250} />
                       </div>
                     );
                   })}
