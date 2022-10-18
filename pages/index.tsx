@@ -146,7 +146,7 @@ const Home = (props: Props) => {
   );
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const NASA_API = process.env.NASA_API;
   const link = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3&api_key=${NASA_API}`;
 

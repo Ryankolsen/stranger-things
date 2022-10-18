@@ -8,7 +8,11 @@ import {
 } from "@tanstack/react-query";
 import Image from "next/image";
 import { fetchImages, useImages } from "../../hooks/index";
-
+/*
+SSR (getServerSideProps and paths) is recommended for apps in which you have to pre-render frequently updated data from external sources. 
+This technique is especially recommended when the data cannot be statically generated before a user request takes place, 
+and at the same time needs to be available to search engines.
+*/
 interface Props {
   date: string;
   data: {
