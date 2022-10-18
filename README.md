@@ -1,3 +1,23 @@
+# App to fetch from NASA API
+
+Thank you for checking out these docs. This is a Typescript, NextJS application built using Server Side Rendering with React Query (Tanstack) to help prefetch data and use hydration to manage the process of prefetching, caching and refetching queries.
+
+In order to get around the way Next uses environmental variables I used an api route to fetch data and handle the env variables securely.
+
+React Hook Form is used to help manage form and inputs:
+https://react-hook-form.com/
+
+Tailwind for CSS:
+https://tailwindcss.com/docs/guides/nextjs
+
+Tanstack Query with SSR:
+https://tanstack.com/query/v4/docs/guides/ssr
+
+SSR with NextJS:
+https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props
+
+TLDR NextJs Stuff:
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -32,4 +52,4 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-"# stranger-things" 
+"# stranger-things"
