@@ -113,7 +113,7 @@ interface Context {
     date: string;
   };
 }
-export async function getStaticProps(context: Context) {
+export async function getServerSideProps(context: Context) {
   const queryClient = new QueryClient();
   const { date } = context.params;
   console.log("fetching images from getstatic props", date);
@@ -128,7 +128,7 @@ export async function getStaticProps(context: Context) {
   };
 }
 
-export function getStaticPaths() {
+export function getServerSidePaths() {
   return {
     paths: [
       {
