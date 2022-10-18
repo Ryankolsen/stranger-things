@@ -24,7 +24,7 @@ interface Data {
   };
 }
 const fetchImages = async (date: string) => {
-  const parsed = await fetch(`http://localhost:3000/api/nasa/${date}`)
+  const parsed = await fetch(`/api/nasa/${date}`)
     .then((res) => res.json())
     .then((data: Data) => {
       return data;
