@@ -29,9 +29,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  console.log("fetching from api/date");
   const { date } = req.query;
-  console.log("date", date);
   const API_KEY = process.env.NASA_API;
 
   const link = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=${date}&page=1&api_key=${API_KEY}`;

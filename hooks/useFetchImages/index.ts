@@ -29,12 +29,10 @@ const fetchImages = async (date: string) => {
     .then((data: Data) => {
       return data;
     });
-  console.log(parsed);
   return parsed;
 };
 
 const useImages = (date: string) => {
-  console.log("useImages ran date: ", date);
   return useQuery([date, () => fetchImages(date)]);
 };
 

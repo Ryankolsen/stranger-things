@@ -45,8 +45,6 @@ const NasaByDate = (props: Props) => {
     fetchImages(props.date)
   );
 
-  console.log("data", data?.data);
-
   return (
     <>
       <Head>
@@ -134,7 +132,6 @@ interface Context {
 export async function getServerSideProps(context: Context) {
   const queryClient = new QueryClient();
   const { date } = context.params;
-  console.log("fetching images from getstatic props", date);
 
   await queryClient.prefetchQuery(["fetchData"], () => fetchImages(date));
 
