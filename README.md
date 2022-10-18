@@ -1,6 +1,6 @@
 # App to fetch from NASA API
 
-Thank you for checking out these docs. This is a Typescript, NextJS application built using Server Side Rendering with React Query (Tanstack) to help prefetch data and use hydration to manage the process of prefetching, caching and refetching queries.
+Thank you for checking out these docs. This is a Typescript, NextJS application built using Server Side Rendering with React Query (Tanstack) to help prefetch data and use hydration to manage the process of caching and refetching queries.
 
 In order to get around the way Next uses environmental variables I used an api route to fetch data and handle the env variables securely.
 
