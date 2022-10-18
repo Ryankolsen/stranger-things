@@ -79,6 +79,18 @@ const NasaByDate = (props: Props) => {
                 })}
               </div>
             </div>
+          ) : data?.data.photos.length === 0 ? (
+            <>
+              {" "}
+              <div className="text-center flex flex-col justify-center h-screen">
+                <h1 className="text-lg  sm:text-2xl p-2">
+                  Error! No images found for Earth Date: {props.date}{" "}
+                </h1>
+                <p className="sm:text-xl p-2">
+                  Please go to homepage and search a different date{" "}
+                </p>
+              </div>
+            </>
           ) : data?.data.photos ? (
             <>
               <div>
@@ -101,7 +113,9 @@ const NasaByDate = (props: Props) => {
               </div>
             </>
           ) : !data ? (
-            <p>Sorry, no results. Please search again for a different date</p>
+            <div className="text-center flex flex-col justify-center h-screen">
+              <p>An error occurred, please go home and try to search again</p>
+            </div>
           ) : isError ? (
             <p> {isError}</p>
           ) : null}
