@@ -3,9 +3,12 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { useForm, Resolver } from "react-hook-form";
+import { useForm, Resolver, Controller } from "react-hook-form";
 import Image from "next/image";
 import heroImg from "../assets/mars-space-image.jpg";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useState } from "react";
 
 //This page loads without hydration/dehydration
 
@@ -37,6 +40,7 @@ interface Inputs {
   inputDate: string;
 }
 
+//kept this for reference to use on future applications
 const resolver: Resolver<Inputs> = async (values) => {
   return {
     values: values.inputDate ? values : {},
@@ -65,6 +69,16 @@ const Home = (props: Props) => {
     router.push(`/nasa/${data.inputDate}`)
   );
 
+  const [searchDate, setSearchDate] = useState(new Date());
+
+  function handleSubmitPicker() {
+    const formattedDate = searchDate.toISOString().split("T"[0]);
+    const noZeroFormattedDate = formattedDate[0].replace(/-0+/g, "-");
+    console.log("handleSubmit", noZeroFormattedDate);
+
+    router.push(`/nasa/${noZeroFormattedDate}`);
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -91,8 +105,26 @@ const Home = (props: Props) => {
             </div>
 
             <div className="text-center p-6">
-              <p>Search for images by date</p>
-              <form className="p-4" onSubmit={onSubmit}>
+              <p className="p-8 sm:p-6">Search for images by date</p>
+              <form>
+                <DatePicker
+                  dateFormat={"yyy-M-d"}
+                  className="mx-4 text-gray-900 w-24 rounded-sm px-1"
+                  selected={searchDate}
+                  onChange={(date: Date) => setSearchDate(date)}
+                />
+                <div className="pt-8">
+                  <button
+                    className="mt-8  sm:mt-auto bg-transparent hover:cursor-pointer hover:bg-blue-500 text-gray-200 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                    onClick={(e) => {
+                      e.preventDefault(), handleSubmitPicker();
+                    }}
+                  >
+                    Submit
+                  </button>
+                </div>
+              </form>
+              {/* <form className="p-4" onSubmit={onSubmit}>
                 <label className="p-8">
                   Earth Date:{" "}
                   <input
@@ -106,7 +138,7 @@ const Home = (props: Props) => {
                   className="mt-8  sm:mt-auto bg-transparent hover:cursor-pointer hover:bg-blue-500 text-gray-200 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
                   type={"submit"}
                 />
-              </form>
+              </form> */}
               {errors.inputDate && <p>{errors.inputDate.message}</p>}
             </div>
 
