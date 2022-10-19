@@ -116,7 +116,7 @@ const Home = (props: Props) => {
               <p className="p-8 sm:p-6">Search for images by date</p>
               <form>
                 <DatePicker
-                  dateFormat={"yyy-M-d"}
+                  // dateFormat={"yyy-M-d"}
                   className="mx-4 text-gray-900 w-24 rounded-sm px-1"
                   selected={searchDate}
                   onChange={(date: Date) => setSearchDate(date)}
