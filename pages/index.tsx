@@ -124,6 +124,7 @@ const Home = (props: Props) => {
                   </button>
                 </div>
               </form>
+              {/* kept below code for reference only, replaced with calendar picker */}
               {/* <form className="p-4" onSubmit={onSubmit}>
                 <label className="p-8">
                   Earth Date:{" "}
