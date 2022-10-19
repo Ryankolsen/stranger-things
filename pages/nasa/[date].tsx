@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-query";
 import Image from "next/image";
 import { fetchImages, useImages } from "../../hooks/index";
+import Spinner from "../../components/Spinner";
 /*
 SSR (getServerSideProps and paths) is recommended for apps in which you have to pre-render frequently updated data from external sources. 
 This technique is especially recommended when the data cannot be statically generated before a user request takes place, 
@@ -59,15 +60,7 @@ const NasaByDate = (props: Props) => {
         <>
           {router.isFallback || isLoading ? (
             <div className="">
-              <div className="flex items-center justify-center ">
-                <div className="w-16 h-16 border-b-2 border-gray-900 rounded-full animate-spin"></div>
-              </div>
-              <div className="flex items-center justify-center ">
-                <div className="w-24 h-24 border-l-2 border-gray-900 rounded-full animate-spin"></div>
-              </div>
-              <div className="flex items-center justify-center ">
-                <div className="w-40 h-40 border-t-4 border-b-4 border-violet-700 rounded-full animate-spin"></div>
-              </div>
+              <Spinner />
             </div>
           ) : props.data ? (
             <div>
