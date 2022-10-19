@@ -9,6 +9,7 @@ import heroImg from "../assets/mars-space-image.jpg";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
+import { useNavStore } from "../hooks/store/zustand";
 
 //This page loads without hydration/dehydration
 
@@ -70,6 +71,7 @@ const Home = (props: Props) => {
   );
 
   const [searchDate, setSearchDate] = useState(new Date());
+  const showMobileMenu = useNavStore((state) => state.showMobileMenu);
 
   function handleSubmitPicker() {
     const formattedDate = searchDate.toISOString().split("T"[0]);
@@ -97,7 +99,13 @@ const Home = (props: Props) => {
               width={1280}
               height={460}
             />
-            <div className=" absolute top-28 sm:top-32 lg:top-48 inset-x-3  self-center  text-center text-gray-50 ">
+            <div
+              className={
+                showMobileMenu
+                  ? "absolute top-56 inset-x-3 text-center text-gray-50  sm:left-a sm:top-32 lg:top-48 "
+                  : " absolute top-28 sm:top-32 lg:top-48 inset-x-3  self-center  text-center text-gray-50 "
+              }
+            >
               <h1 className="text-4xl md:5xl lg:text-6xl">NASA</h1>
               <p className="pt-4 text-2xl md:3xl lg:text-4xl">
                 Search the Mars Rover API
