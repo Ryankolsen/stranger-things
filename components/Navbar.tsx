@@ -5,22 +5,23 @@ import closeMenuSvg from "../assets/MobileClosed.svg";
 import bellSvg from "../assets/Bell.svg";
 // import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import create from "zustand";
+import { devtools, persist } from "zustand/middleware";
 
 import Image from "next/image";
 import Link from "next/link";
+import { useNavStore } from "../hooks/store/zustand";
 
 const Navbar: NextPage = () => {
-  const [showMobileMenu, setMobileMenu] = useState(false);
+  // const [showMobileMenu, setMobileMenu] = useState(false);
   const router = useRouter();
   //   const { data: session, status } = useSession();
-
+  const showMobileMenu = useNavStore((state) => state.showMobileMenu);
+  const changeMobileState = useNavStore((state) => state.changeState);
   function handleMobileMenuClick() {
-    setMobileMenu(!showMobileMenu);
+    changeMobileState();
   }
 
-  function handleNavRout(route: string) {
-    router.push(`${route}`);
-  }
   return (
     <>
       <nav className="bg-gray-800">
@@ -81,13 +82,6 @@ const Navbar: NextPage = () => {
                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                   >
                     Other Projects
-                  </a>
-
-                  <a
-                    href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    Calendar
                   </a>
                 </div>
               </div>
@@ -156,13 +150,6 @@ const Navbar: NextPage = () => {
               className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             >
               Other Projects
-            </a>
-
-            <a
-              href="#"
-              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-            >
-              Calendar
             </a>
           </div>
         </div>
