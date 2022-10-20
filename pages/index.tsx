@@ -10,6 +10,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import { useNavStore } from "../hooks/store/zustand";
+import Spinner from "../components/Spinner";
 
 //This page loads without hydration/dehydration
 
@@ -92,13 +93,15 @@ const Home = (props: Props) => {
       <main>
         <>
           <div className="w-fit m-auto min-h-[1000px]">
-            <Image
-              className="w-full sm:w-96 object-cover object-top opacity-50"
-              src={heroImg}
-              alt="image of mars"
-              width={1280}
-              height={460}
-            />
+            <div className="w-fit mx-auto">
+              <Image
+                className="w-full object-cover object-top opacity-50"
+                src={heroImg}
+                alt="image of mars"
+                width={1280}
+                height={460}
+              />
+            </div>
             <div
               className={
                 showMobileMenu
@@ -153,7 +156,7 @@ const Home = (props: Props) => {
 
             <div>
               {isLoading ? (
-                <p>Loading...</p>
+                <Spinner />
               ) : props.imageData ? (
                 <div className="flex flex-wrap justify-around">
                   {props.imageData.photos.map((image) => {
@@ -161,7 +164,7 @@ const Home = (props: Props) => {
                       <div className="p-6" key={image.id}>
                         <div>
                           <Image src={image.img_src} height={250} width={250} />
-                        </div>{" "}
+                        </div>
                       </div>
                     );
                   })}
@@ -189,7 +192,7 @@ const Home = (props: Props) => {
 
 export async function getServerSideProps() {
   const NASA_API = process.env.NASA_API;
-  const link = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3&api_key=${NASA_API}`;
+  const link = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2022-8-20&page=1&api_key=${NASA_API}`;
 
   const imageData = await fetch(link)
     .then((response) => response.json())
