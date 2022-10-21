@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useState } from "react";
 import Head from "next/head";
 import {
   dehydrate,
@@ -9,6 +10,7 @@ import {
 import Image from "next/image";
 import { fetchImages, useImages } from "../../hooks/index";
 import Spinner from "../../components/Spinner";
+import LargeImage from "../../components/LargeImage";
 /*
 SSR (getServerSideProps and paths) is recommended for apps in which you have to pre-render frequently updated data from external sources. 
 This technique is especially recommended when the data cannot be statically generated before a user request takes place, 
@@ -45,7 +47,13 @@ const NasaByDate = (props: Props) => {
   const { data, isLoading, isError } = useQuery(["fetchData"], () =>
     fetchImages(props.date)
   );
+  const [showBigImage, setShowBigImage] = useState(false);
+  const [imageSource, setImageSource] = useState("");
 
+  function handleImageClick(imgSrc: string) {
+    setImageSource(imgSrc);
+    setShowBigImage(true);
+  }
   return (
     <>
       <Head>
@@ -58,6 +66,17 @@ const NasaByDate = (props: Props) => {
       </Head>
       <main>
         <>
+          {/* Handle large image view when thumbnail is clicked */}
+          {showBigImage ? (
+            <div className="fixed m-auto pt-6 top-10 left-0 right-0 z-10 w-fit h-fit bg-gray-300 rounded-md">
+              <div>
+                <LargeImage
+                  imageSource={imageSource}
+                  setShowBigImage={setShowBigImage}
+                />
+              </div>{" "}
+            </div>
+          ) : null}
           {router.isFallback || isLoading ? (
             <div className="">
               <Spinner />
@@ -72,11 +91,12 @@ const NasaByDate = (props: Props) => {
                   return (
                     <div className="p-4 " key={photo.id}>
                       <Image
-                        className="rounded-lg"
+                        className="rounded-lg hover:scale-105 hover:cursor-pointer"
                         width={250}
                         height={250}
                         src={photo.img_src}
                         alt={`Image from ${photo.camera.full_name}`}
+                        onClick={() => handleImageClick(photo.img_src)}
                       />
                     </div>
                   );
@@ -85,7 +105,6 @@ const NasaByDate = (props: Props) => {
             </div>
           ) : data?.data.photos.length === 0 ? (
             <>
-              {" "}
               <div className="text-center flex flex-col justify-center h-screen">
                 <h1 className="text-lg  sm:text-2xl p-2">
                   Error! No images found for Earth Date: {props.date}{" "}
@@ -106,11 +125,12 @@ const NasaByDate = (props: Props) => {
                     return (
                       <div className="p-4" key={photo.id}>
                         <Image
-                          className="rounded-lg"
+                          className="rounded-lg hover:scale-110 transform duration-300 ease-in-out hover:cursor-pointer "
                           width={250}
                           height={250}
                           src={photo.img_src}
                           alt={`Image from ${photo.camera.full_name}`}
+                          onClick={() => handleImageClick(photo.img_src)}
                         />
                       </div>
                     );
