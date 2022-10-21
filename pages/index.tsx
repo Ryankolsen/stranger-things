@@ -5,13 +5,12 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useForm, Resolver, Controller } from "react-hook-form";
 import Image from "next/image";
-import heroImg from "../assets/mars-space-image.jpg";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
-import { useNavStore } from "../hooks/store/zustand";
 import Spinner from "../components/Spinner";
 import LargeImage from "../components/LargeImage";
+import Hero from "../components/Hero";
 
 //This page loads without hydration/dehydration
 
@@ -73,16 +72,19 @@ const Home = (props: Props) => {
   );
 
   const [searchDate, setSearchDate] = useState(new Date());
-  const showMobileMenu = useNavStore((state) => state.showMobileMenu);
 
   const [showBigImage, setShowBigImage] = useState(false);
   const [imageSource, setImageSource] = useState("");
+  const [error, setError] = useState("");
 
   function handleSubmitPicker() {
+    if (!searchDate) {
+      setError("Error, please enter a valid date");
+      return;
+    }
     const formattedDate = searchDate.toISOString().split("T"[0]);
     const noZeroFormattedDate = formattedDate[0].replace(/-0+/g, "-");
     console.log("handleSubmit", noZeroFormattedDate);
-
     router.push(`/nasa/${noZeroFormattedDate}`);
   }
 
@@ -102,28 +104,7 @@ const Home = (props: Props) => {
       <main>
         <>
           <div className="w-fit m-auto min-h-[1000px]">
-            <div className="w-fit mx-auto enter">
-              <Image
-                className="w-full object-cover object-top opacity-50"
-                src={heroImg}
-                alt="image of mars"
-                width={1280}
-                height={460}
-              />
-            </div>
-            <div
-              className={
-                showMobileMenu
-                  ? "absolute top-56 inset-x-3 text-center text-gray-50  sm:left-a sm:top-32 lg:top-48 "
-                  : " absolute top-28 sm:top-32 lg:top-48 inset-x-3  self-center  text-center text-gray-50 "
-              }
-            >
-              <h1 className="text-4xl md:5xl lg:text-6xl">NASA</h1>
-              <p className="pt-4 text-2xl md:3xl lg:text-4xl">
-                Search the Mars Rover API
-              </p>
-            </div>
-
+            <Hero />
             <div className="text-center p-6">
               <p className="p-8 sm:p-6">Search for images by date</p>
               <form>
@@ -133,9 +114,10 @@ const Home = (props: Props) => {
                   selected={searchDate}
                   onChange={(date: Date) => setSearchDate(date)}
                 />
-                <div className="pt-8">
+                <div className="pt-6">
+                  {error ? <p>{error}</p> : null}
                   <button
-                    className="mt-8 button "
+                    className="mt-8 button"
                     onClick={(e) => {
                       e.preventDefault(), handleSubmitPicker();
                     }}
