@@ -1,4 +1,5 @@
 import Image from "next/image";
+import MobileClosedDark from "../assets/MobileClosedDark.svg";
 
 interface Props {
   imageSource: string;
@@ -13,9 +14,22 @@ function LargeImage(props: Props) {
   return (
     <>
       <div className="flex justify-center">
+        <div>
+          <button
+            onClick={handleCloseClick}
+            className="w-full absolute text-end  justify-end px-2 z-20 "
+          >
+            <Image
+              src={MobileClosedDark}
+              alt="Close image window"
+              height={20}
+              width={20}
+            />
+          </button>
+        </div>
         <button>Prev</button>
         <Image
-          className="object-cover object-top "
+          className="object-cover object-top"
           src={imageSource}
           alt="image of mars"
           width={700}
@@ -23,9 +37,11 @@ function LargeImage(props: Props) {
         />
         <button>Next</button>
       </div>
-      <button onClick={handleCloseClick} className="w-full flex justify-center">
-        Close
-      </button>
+      <div className="w-28 m-auto p-4">
+        <button onClick={handleCloseClick} className="mt-8  button-light-bg">
+          Close
+        </button>
+      </div>
     </>
   );
 }

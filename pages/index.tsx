@@ -135,7 +135,7 @@ const Home = (props: Props) => {
                 />
                 <div className="pt-8">
                   <button
-                    className="mt-8  sm:mt-auto bg-transparent hover:cursor-pointer hover:bg-blue-500 text-gray-200 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                    className="mt-8 button "
                     onClick={(e) => {
                       e.preventDefault(), handleSubmitPicker();
                     }}
@@ -165,10 +165,14 @@ const Home = (props: Props) => {
 
             {/* Handle large image view when thumbnail is clicked */}
             {showBigImage ? (
-              <LargeImage
-                imageSource={imageSource}
-                setShowBigImage={setShowBigImage}
-              />
+              <div className="fixed m-auto pt-6 top-10 left-0 right-0 z-10 w-fit h-fit bg-gray-300">
+                <div>
+                  <LargeImage
+                    imageSource={imageSource}
+                    setShowBigImage={setShowBigImage}
+                  />
+                </div>{" "}
+              </div>
             ) : null}
             <div>
               {isLoading ? (
