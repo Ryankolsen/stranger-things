@@ -4,6 +4,8 @@ Thank you for checking out these docs. This is a Typescript, NextJS application 
 
 In order to get around the way Next uses environmental variables I used an api route to fetch data and handle the env variables securely.
 
+\*\*This application is titled "Stranger Things" because I intended to use the Stranger things API...however, the API is quite pricey so Instead check out this app that links up to a NASA API! You're Welcome!
+
 React Hook Form is used to help manage form and inputs:
 https://react-hook-form.com/
 
