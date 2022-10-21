@@ -17,7 +17,7 @@ function LargeImage(props: Props) {
         <div>
           <button
             onClick={handleCloseClick}
-            className="w-full absolute text-end  justify-end px-2 z-20 "
+            className="w-full absolute -mt-5 text-end pr-2 justify-end  z-20 "
           >
             <Image
               src={MobileClosedDark}
@@ -27,7 +27,7 @@ function LargeImage(props: Props) {
             />
           </button>
         </div>
-        <button>Prev</button>
+        <div className=" flex h-auto  p-1 sm:p-4"></div>
         <Image
           className="object-cover object-top"
           src={imageSource}
@@ -35,9 +35,9 @@ function LargeImage(props: Props) {
           width={700}
           height={700}
         />
-        <button>Next</button>
+        <div className=" flex h-auto p-1 sm:p-4"></div>
       </div>
-      <div className="w-28 m-auto p-4">
+      <div className="w-28 m-auto pb-8">
         <button onClick={handleCloseClick} className="mt-8  button-light-bg">
           Close
         </button>

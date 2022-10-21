@@ -165,7 +165,7 @@ const Home = (props: Props) => {
 
             {/* Handle large image view when thumbnail is clicked */}
             {showBigImage ? (
-              <div className="fixed m-auto pt-6 top-10 left-0 right-0 z-10 w-fit h-fit bg-gray-300">
+              <div className="fixed m-auto pt-6 top-10 left-0 right-0 z-10 w-fit h-fit bg-gray-300 rounded-md">
                 <div>
                   <LargeImage
                     imageSource={imageSource}
