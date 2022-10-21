@@ -1,9 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { useForm, Resolver, Controller } from "react-hook-form";
 import Image from "next/image";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -38,38 +37,11 @@ interface Props {
   };
 }
 
-interface Inputs {
-  inputDate: string;
-}
-
-//kept this for reference to use on future applications
-const resolver: Resolver<Inputs> = async (values) => {
-  return {
-    values: values.inputDate ? values : {},
-    errors: !values.inputDate
-      ? {
-          inputDate: {
-            type: "minLength",
-            message: "Please enter a date in yyyy-mm-dd format.",
-          },
-        }
-      : {},
-  };
-};
-
 const Home = (props: Props) => {
   const router = useRouter();
   const { data, isLoading, isError } = useQuery(["getImages"], {
     initialData: props.imageData,
   });
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>({ resolver });
-  const onSubmit = handleSubmit((data) =>
-    router.push(`/nasa/${data.inputDate}`)
-  );
 
   const [searchDate, setSearchDate] = useState(new Date());
 
@@ -126,23 +98,6 @@ const Home = (props: Props) => {
                   </button>
                 </div>
               </form>
-              {/* kept below code for reference only, replaced with calendar picker */}
-              {/* <form className="p-4" onSubmit={onSubmit}>
-                <label className="p-8">
-                  Earth Date:{" "}
-                  <input
-                    className="mx-4 text-gray-900"
-                    placeholder="2020-9-15"
-                    {...register("inputDate")}
-                  />
-                </label>
-
-                <input
-                  className="mt-8  sm:mt-auto bg-transparent hover:cursor-pointer hover:bg-blue-500 text-gray-200 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-                  type={"submit"}
-                />
-              </form> */}
-              {errors.inputDate && <p>{errors.inputDate.message}</p>}
             </div>
 
             {/* Handle large image view when thumbnail is clicked */}
