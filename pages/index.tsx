@@ -3,17 +3,17 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import Spinner from "../components/Spinner";
 import LargeImage from "../components/LargeImage";
 import Hero from "../components/Hero";
+import DisplayImg from "../components/DisplayImg";
 
 //This page loads without hydration/dehydration
 
-interface Props {
+export interface Props {
   imageData: {
     photos: {
       id: number;
@@ -116,37 +116,21 @@ const Home = (props: Props) => {
                 <Spinner />
               ) : props.imageData ? (
                 <div className="flex flex-wrap justify-around">
-                  {props.imageData.photos.map((image) => {
-                    return (
-                      <ul className="p-6" key={image.id}>
-                        <li className="  bg-gray-300 ">
-                          <button
-                            onClick={() => handleImageClick(image.img_src)}
-                            className=" hover:scale-105 transform duration-300 ease-in-out flex justify-center"
-                          >
-                            <Image
-                              className="hover:opacity-90 hover:cursor-pointer"
-                              src={image.img_src}
-                              height={250}
-                              width={250}
-                            />
-                          </button>
-                        </li>
-                      </ul>
-                    );
-                  })}
+                  <DisplayImg
+                    photos={props.imageData.photos}
+                    isError={isError}
+                    isLoading={isLoading}
+                  />
                 </div>
               ) : isError ? (
                 <p>Error fetching data</p>
               ) : data ? (
                 <div className="flex flex-wrap justify-around">
-                  {data.photos.map((image) => {
-                    return (
-                      <div key={image.id}>
-                        <Image src={image.img_src} height={250} width={250} />
-                      </div>
-                    );
-                  })}
+                  <DisplayImg
+                    photos={data.photos}
+                    isError={isError}
+                    isLoading={isLoading}
+                  />
                 </div>
               ) : null}
             </div>

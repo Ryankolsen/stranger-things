@@ -7,10 +7,11 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import Image from "next/image";
 import { fetchImages, useImages } from "../../hooks/index";
 import Spinner from "../../components/Spinner";
 import LargeImage from "../../components/LargeImage";
+import DisplayImg from "../../components/DisplayImg";
+
 /*
 SSR (getServerSideProps and paths) is recommended for apps in which you have to pre-render frequently updated data from external sources. 
 This technique is especially recommended when the data cannot be statically generated before a user request takes place, 
@@ -82,26 +83,12 @@ const NasaByDate = (props: Props) => {
               <Spinner />
             </div>
           ) : props.data ? (
-            <div>
-              <h1 className="text-center text-3xl p-8">
-                Images From {props.date}
-              </h1>
-              <div className="flex flex-wrap justify-around pt-2">
-                {props.data.photos.map((photo) => {
-                  return (
-                    <div className="p-4 " key={photo.id}>
-                      <Image
-                        className="rounded-lg hover:scale-105 hover:cursor-pointer"
-                        width={250}
-                        height={250}
-                        src={photo.img_src}
-                        alt={`Image from ${photo.camera.full_name}`}
-                        onClick={() => handleImageClick(photo.img_src)}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
+            <div className="flex flex-wrap justify-around pt-2">
+              <DisplayImg
+                photos={props.data.photos}
+                isError={isError}
+                isLoading={isLoading}
+              />
             </div>
           ) : data?.data.photos.length === 0 ? (
             <>
@@ -121,20 +108,11 @@ const NasaByDate = (props: Props) => {
                   Images From {props.date}
                 </h1>
                 <div className="flex flex-wrap justify-around pt-2">
-                  {data.data.photos.map((photo) => {
-                    return (
-                      <div className="p-4" key={photo.id}>
-                        <Image
-                          className="rounded-lg hover:scale-110 transform duration-300 ease-in-out hover:cursor-pointer "
-                          width={250}
-                          height={250}
-                          src={photo.img_src}
-                          alt={`Image from ${photo.camera.full_name}`}
-                          onClick={() => handleImageClick(photo.img_src)}
-                        />
-                      </div>
-                    );
-                  })}
+                  <DisplayImg
+                    photos={data.data.photos}
+                    isError={isError}
+                    isLoading={isLoading}
+                  />
                 </div>
               </div>
             </>
