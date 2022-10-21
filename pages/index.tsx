@@ -11,6 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import { useNavStore } from "../hooks/store/zustand";
 import Spinner from "../components/Spinner";
+import LargeImage from "../components/LargeImage";
 
 //This page loads without hydration/dehydration
 
@@ -74,12 +75,20 @@ const Home = (props: Props) => {
   const [searchDate, setSearchDate] = useState(new Date());
   const showMobileMenu = useNavStore((state) => state.showMobileMenu);
 
+  const [showBigImage, setShowBigImage] = useState(false);
+  const [imageSource, setImageSource] = useState("");
+
   function handleSubmitPicker() {
     const formattedDate = searchDate.toISOString().split("T"[0]);
     const noZeroFormattedDate = formattedDate[0].replace(/-0+/g, "-");
     console.log("handleSubmit", noZeroFormattedDate);
 
     router.push(`/nasa/${noZeroFormattedDate}`);
+  }
+
+  function handleImageClick(imgSrc: string) {
+    setImageSource(imgSrc);
+    setShowBigImage(true);
   }
 
   return (
@@ -93,7 +102,7 @@ const Home = (props: Props) => {
       <main>
         <>
           <div className="w-fit m-auto min-h-[1000px]">
-            <div className="w-fit mx-auto">
+            <div className="w-fit mx-auto enter">
               <Image
                 className="w-full object-cover object-top opacity-50"
                 src={heroImg}
@@ -126,7 +135,7 @@ const Home = (props: Props) => {
                 />
                 <div className="pt-8">
                   <button
-                    className="mt-8  sm:mt-auto bg-transparent hover:cursor-pointer hover:bg-blue-500 text-gray-200 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                    className="mt-8 button "
                     onClick={(e) => {
                       e.preventDefault(), handleSubmitPicker();
                     }}
@@ -154,6 +163,17 @@ const Home = (props: Props) => {
               {errors.inputDate && <p>{errors.inputDate.message}</p>}
             </div>
 
+            {/* Handle large image view when thumbnail is clicked */}
+            {showBigImage ? (
+              <div className="fixed m-auto pt-6 top-10 left-0 right-0 z-10 w-fit h-fit bg-gray-300 rounded-md">
+                <div>
+                  <LargeImage
+                    imageSource={imageSource}
+                    setShowBigImage={setShowBigImage}
+                  />
+                </div>{" "}
+              </div>
+            ) : null}
             <div>
               {isLoading ? (
                 <Spinner />
@@ -161,11 +181,21 @@ const Home = (props: Props) => {
                 <div className="flex flex-wrap justify-around">
                   {props.imageData.photos.map((image) => {
                     return (
-                      <div className="p-6" key={image.id}>
-                        <div>
-                          <Image src={image.img_src} height={250} width={250} />
-                        </div>
-                      </div>
+                      <ul className="p-6" key={image.id}>
+                        <li className="  bg-gray-300 ">
+                          <button
+                            onClick={() => handleImageClick(image.img_src)}
+                            className=" hover:scale-105 transform duration-300 ease-in-out flex justify-center"
+                          >
+                            <Image
+                              className="hover:opacity-90 hover:cursor-pointer"
+                              src={image.img_src}
+                              height={250}
+                              width={250}
+                            />
+                          </button>
+                        </li>
+                      </ul>
                     );
                   })}
                 </div>
