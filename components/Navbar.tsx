@@ -1,23 +1,19 @@
 import { NextPage } from "next";
-import { useState } from "react";
 import openMenuSvg from "../assets/MobileOpen.svg";
 import closeMenuSvg from "../assets/MobileClosed.svg";
 import bellSvg from "../assets/Bell.svg";
-// import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import create from "zustand";
-import { devtools, persist } from "zustand/middleware";
-
 import Image from "next/image";
 import Link from "next/link";
 import { useNavStore } from "../hooks/store/zustand";
 
 const Navbar: NextPage = () => {
-  // const [showMobileMenu, setMobileMenu] = useState(false);
   const router = useRouter();
-  //   const { data: session, status } = useSession();
   const showMobileMenu = useNavStore((state) => state.showMobileMenu);
   const changeMobileState = useNavStore((state) => state.changeState);
+  //NextAuth:
+  const { data: session, status } = useSession();
   function handleMobileMenuClick() {
     changeMobileState();
   }
@@ -99,7 +95,7 @@ const Navbar: NextPage = () => {
               {/* <!-- Profile dropdown --> */}
               <div className="relative ml-3">
                 <div>
-                  {/* {session ? (
+                  {session ? (
                     <button
                       onClick={() => signOut()}
                       className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
@@ -113,7 +109,7 @@ const Navbar: NextPage = () => {
                     >
                       Login With Discord
                     </button>
-                  )} */}
+                  )}
                 </div>
 
                 {/* <!--
