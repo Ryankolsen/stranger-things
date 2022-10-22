@@ -6,18 +6,22 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import { SessionProvider } from "next-auth/react";
 
-function MyApp({ Component, pageProps }: any) {
+//@ts-ignore
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const queryClient = new QueryClient();
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <Navbar />
+      <SessionProvider session={session}>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <Navbar />
 
-          <Component {...pageProps} />
-        </Hydrate>
-      </QueryClientProvider>
+            <Component {...pageProps} />
+          </Hydrate>
+        </QueryClientProvider>
+      </SessionProvider>
     </>
   );
 }

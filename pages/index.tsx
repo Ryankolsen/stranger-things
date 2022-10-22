@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { NextPage, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useQuery } from "@tanstack/react-query";
@@ -14,6 +14,20 @@ import DisplayImg from "../components/DisplayImg";
 //This page loads without hydration/dehydration
 
 export interface Props {
+  photos: {
+    id: number;
+    sol: number;
+    camera: { id: number; name: string; rover_id: string; full_name: string };
+    img_src: string;
+    earth_date: string;
+    rover: {
+      id: number;
+      name: string;
+      landing_date: string;
+      launch_date: string;
+      status: string;
+    };
+  }[];
   imageData: {
     photos: {
       id: number;
@@ -37,14 +51,17 @@ export interface Props {
   };
 }
 
-const Home = (props: Props) => {
+const Home = (
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) => {
   const router = useRouter();
   const { data, isLoading, isError } = useQuery(["getImages"], {
     initialData: props.imageData,
   });
 
-  const [searchDate, setSearchDate] = useState(new Date());
+  //NextAuth:
 
+  const [searchDate, setSearchDate] = useState(new Date());
   const [showBigImage, setShowBigImage] = useState(false);
   const [imageSource, setImageSource] = useState("");
   const [error, setError] = useState("");
@@ -58,11 +75,6 @@ const Home = (props: Props) => {
     const noZeroFormattedDate = formattedDate[0].replace(/-0+/g, "-");
     console.log("handleSubmit", noZeroFormattedDate);
     router.push(`/nasa/${noZeroFormattedDate}`);
-  }
-
-  function handleImageClick(imgSrc: string) {
-    setImageSource(imgSrc);
-    setShowBigImage(true);
   }
 
   return (
@@ -79,6 +91,7 @@ const Home = (props: Props) => {
             <Hero />
             <div className="text-center p-6">
               <p className="p-8 sm:p-6">Search for images by date</p>
+
               <form>
                 <DatePicker
                   // dateFormat={"yyy-M-d"}
@@ -127,7 +140,7 @@ const Home = (props: Props) => {
               ) : data ? (
                 <div className="flex flex-wrap justify-around">
                   <DisplayImg
-                    photos={data.photos}
+                    photos={data.imageData.photos}
                     isError={isError}
                     isLoading={isLoading}
                   />
