@@ -6,13 +6,12 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "../../../server/db/client";
 
 export const authOptions: NextAuthOptions = {
-  // Include user.id on session
   callbacks: {
     session({ session, user }) {
       if (session.user) {
         //TODO get this to read session.user.id = user.id
-        //@ts-ignore
-        session.user.id = user.email;
+        // @ts-ignore
+        session.user.id = user.id;
       }
       return session;
     },
@@ -24,7 +23,7 @@ export const authOptions: NextAuthOptions = {
   //TODO fix ts ignore if possible
   providers: [
     DiscordProvider({
-      //@ts-ignore
+      // @ts-ignore
       clientId: process.env.DISCORD_CLIENT_ID,
       //@ts-ignore
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
