@@ -66,6 +66,7 @@ function DisplayImg(props: Props) {
                     >
                       <Image
                         className="hover:opacity-90 hover:cursor-pointer"
+                        alt={`Image from Mars rover date: ${image.earth_date}`}
                         src={image.img_src}
                         height={250}
                         width={250}
