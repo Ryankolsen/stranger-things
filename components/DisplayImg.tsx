@@ -59,10 +59,10 @@ function DisplayImg(props: Props) {
             {photos.map((image) => {
               return (
                 <ul className="p-6" key={image.id}>
-                  <li className="  bg-gray-300 ">
+                  <li className="  bg-gray-800 rounded-md ">
                     <button
                       onClick={() => handleImageClick(image.img_src)}
-                      className=" hover:scale-105 transform duration-300 ease-in-out flex justify-center"
+                      className="scale-90 hover:scale-105 transform duration-300 ease-in-out flex justify-center"
                     >
                       <Image
                         className="hover:opacity-90 hover:cursor-pointer"
