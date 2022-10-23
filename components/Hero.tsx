@@ -6,7 +6,7 @@ function Hero() {
   const showMobileMenu = useNavStore((state) => state.showMobileMenu);
   return (
     <>
-      <div className="w-fit mx-auto enter">
+      <div className="w-fit mx-auto enter pt-6">
         <Image
           className="w-full object-cover object-top opacity-50"
           src={heroImg}
