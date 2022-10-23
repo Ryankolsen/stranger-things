@@ -93,12 +93,15 @@ const Home = (
               <p className="p-8 sm:p-6">Search for images by date</p>
 
               <form>
-                <DatePicker
-                  // dateFormat={"yyy-M-d"}
-                  className="mx-4 text-gray-900 w-24 rounded-sm px-1"
-                  selected={searchDate}
-                  onChange={(date: Date) => setSearchDate(date)}
-                />
+                <div>
+                  <DatePicker
+                    // dateFormat={"yyy-M-d"}
+                    className="mx-4 text-gray-900 w-24 rounded-sm px-1"
+                    selected={searchDate}
+                    onChange={(date: Date) => setSearchDate(date)}
+                    popperPlacement={"auto"}
+                  />
+                </div>
                 <div className="pt-6">
                   {error ? <p>{error}</p> : null}
                   <button

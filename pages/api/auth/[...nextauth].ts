@@ -9,7 +9,6 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     session({ session, user }) {
       if (session.user) {
-        //TODO get this to read session.user.id = user.id
         // @ts-ignore
         session.user.id = user.id;
       }
