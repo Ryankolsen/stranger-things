@@ -94,14 +94,24 @@ const Navbar: NextPage = () => {
 
               {/* <!-- Profile dropdown --> */}
               <div className="relative ml-3">
-                <div>
-                  {session ? (
-                    <button
-                      onClick={() => signOut()}
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Logout
-                    </button>
+                <div className=" ">
+                  {session?.user?.image ? (
+                    <div className="flex justify-center">
+                      <button
+                        onClick={() => signOut()}
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        Logout
+                      </button>
+                      <div className="flex flex-col justify-center rounded-md ">
+                        <Image
+                          src={session.user.image}
+                          height={45}
+                          width={45}
+                          alt={`Profile image for ${session.user.name}`}
+                        />
+                      </div>
+                    </div>
                   ) : (
                     <button
                       onClick={() => signIn("discord")}
