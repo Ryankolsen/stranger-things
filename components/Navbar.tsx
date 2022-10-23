@@ -101,10 +101,11 @@ const Navbar: NextPage = () => {
                         onClick={() => signOut()}
                         className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                       >
-                        Logout
+                        Logout {session.user.name}
                       </button>
-                      <div className="flex flex-col justify-center rounded-md ">
+                      <div className="flex flex-col justify-center  ">
                         <Image
+                          className="rounded-full"
                           src={session.user.image}
                           height={45}
                           width={45}
